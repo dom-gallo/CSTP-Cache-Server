@@ -1,0 +1,11 @@
+# ninja log v5
+4	807	1651351100214932510	CMakeFiles/c___c_server.dir/main.cpp.o	f114f74d823117c0
+808	876	1651351100287621104	c___c_server	74818bee97df5ea5
+4	73	1651350749761825253	CMakeFiles/c___c_server.dir/Message.cpp.o	4d518db3e23d0c5f
+5	712	1651351077763965709	CMakeFiles/c___c_server.dir/RequestHandler.cpp.o	ea1f1fac5e75d0c6
+5	67	1651350749756534478	CMakeFiles/c___c_server.dir/OpCodes.cpp.o	d89070d8d145f6b
+15	156	1651351243027037411	CMakeFiles/c___c_server.dir/Message.cpp.o	89800c97f2586386
+16	158	1651351243027421857	CMakeFiles/c___c_server.dir/OpCodes.cpp.o	d73aaaaaac1b947e
+16	2351	1651351245227211827	CMakeFiles/c___c_server.dir/RequestHandler.cpp.o	3bc7a5596ccd4bf7
+15	2398	1651351245275130833	CMakeFiles/c___c_server.dir/main.cpp.o	9600c4db860ab12c
+2398	2499	1651351245381514006	c___c_server	74818bee97df5ea5

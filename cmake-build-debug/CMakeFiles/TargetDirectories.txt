@@ -1,0 +1,3 @@
+/Users/dgallo/cstp_server/cmake-build-debug/CMakeFiles/c___c_server.dir
+/Users/dgallo/cstp_server/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/dgallo/cstp_server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
