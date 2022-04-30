@@ -140,7 +140,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=c___c_server
+CMAKE_PROJECT_NAME:STATIC=cstp_server
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib
@@ -212,6 +212,15 @@ c___c_server_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 c___c_server_SOURCE_DIR:STATIC=/Users/dgallo/cstp_server
+
+//Value Computed by CMake
+cstp_server_BINARY_DIR:STATIC=/Users/dgallo/cstp_server/cmake-build-debug
+
+//Value Computed by CMake
+cstp_server_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+cstp_server_SOURCE_DIR:STATIC=/Users/dgallo/cstp_server
 
 
 ########################

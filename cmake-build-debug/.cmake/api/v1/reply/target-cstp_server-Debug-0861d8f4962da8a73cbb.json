@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "c___c_server"
+			"path" : "cstp_server"
 		}
 	],
 	"backtrace" : 1,
@@ -59,7 +59,7 @@
 			]
 		}
 	],
-	"id" : "c___c_server::@6890427a1f51a3e7e1df",
+	"id" : "cstp_server::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -75,8 +75,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "c___c_server",
-	"nameOnDisk" : "c___c_server",
+	"name" : "cstp_server",
+	"nameOnDisk" : "cstp_server",
 	"paths" : 
 	{
 		"build" : ".",

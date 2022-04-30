@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "c___c_server",
+					"name" : "cstp_server",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "c___c_server::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-c___c_server-Debug-05247531187a70428cfe.json",
-					"name" : "c___c_server",
+					"id" : "cstp_server::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cstp_server-Debug-0861d8f4962da8a73cbb.json",
+					"name" : "cstp_server",
 					"projectIndex" : 0
 				}
 			]
