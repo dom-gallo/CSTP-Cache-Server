@@ -43,11 +43,39 @@ public:
         for(int i = 0; i < n; i++){
             dataSize += buffer[i];
         }
-        std::cout << "payload Size: " << dataSize << std::endl;
+//        std::cout << "payload Size: " << dataSize << std::endl;
+        setPayLoadSize(dataSize);
         return dataSize;
+    }
+    void loadDataIntoMessage(Message *message){
+        int messageCapacity = message->getCapacity();
+        if(messageCapacity > 1024) {
+            messageCapacity = 1024;
+        }
+        int n;
+        // Loop for loading in chunks of data.
+        char *messageBuffer = message->getBuffer();
+
+        while(n = read(connFileDescriptor, messageBuffer, messageCapacity) > 0){
+            if(n < 0) {
+                std::cout << "Error reading data in message buffer " << std::endl;
+            }
+            for(unsigned int i = 0; i < messageCapacity; ++i)
+            {
+                printf("%02x ", buffer[i]);
+            }
+            std::cout<< std::endl;
+
+            std::cout << "Server received " << messageCapacity << " bytes: " << buffer << std::endl;
+        }
+
     }
 private:
     int connFileDescriptor;
+    int payloadSize;
+    void setPayLoadSize(int datasize){
+        payloadSize = datasize;
+    }
     char *buffer;
     Message message;
 };

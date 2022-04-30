@@ -113,60 +113,18 @@ int main(int argc, char **argv) {
         int opCode = requestHandler->getOpCodeFromSteam();
         message->setOpcode(opCode);
         std::cout << "message opcode: " <<  std::hex<< (OpCodes) message->getOpCode() << std::endl;
-//        n = read(connfd, buf, 1);
-//        if(n < 1){
-//            printf(("Error receiving one byte\n"));
-//        }
-//        if(buf[0] == '@'){
-//            printf("DATA RECEIVED: %02x \n",buf[0]);
-//            printf("GET COMMAND RECEIVED \n");
-//        }
+
         int dataSize = requestHandler->getPayLoadSize();
-//
-//        n = read(connfd, buf, 4);
-//        if( n < 4) {
-//            printf("could not read four additional bytes\n");
-//        }
-//        uint8_t dataSize = buf[1] + buf[2] + buf[3] + buf[4];
-//        printf("Data size is %i\n", dataSize);
-        while((n = read(connfd, buf, dataSize)) > 0) {
-            if ( n < 0){
-                printf("ERROR reading from socket\n");
-            }
-            for (unsigned int i = 0; i < n; i++)
-            {
-                printf("%02x ", buf[i]);
-            }
-            printf("\n");
-            printf("Server received %d bytes: %s\n", n, buf);
-        }
+        std::cout << "incoming payload size: " << std::hex << dataSize << std::endl;
+
+        message->setCapacity(dataSize);
+        message->setBuffer(buf);
+        requestHandler->loadDataIntoMessage(message);
+
         n = write(connfd, buf, strlen(buf));
         if (n < 0){
             printf("ERROR writing to socket\n");
         }
-//        while ((n = read(connfd, buf, BUFSIZE)) > 0){
-////        n = read(connfd, buf, BUFSIZE);
-//
-//            if (n < 0)
-//                error("ERROR reading from socket");
-//
-//            for (unsigned int i = 0; i < n; ++i) {
-//                printf("%02x ", buf[i]);
-//            }
-//            printf("\n");
-//
-//
-////
-////            int nn = n;
-////            nn = n <= 7 ? n : 7;
-////            buf[nn] = '\0';
-////            printf("server received %d bytes: %s\n", n, buf);
-//
-//            /* write: echo the input string back to the client */
-//            n = write(connfd, buf, strlen(buf));
-//            if (n < 0)
-//                error("ERROR writing to socket");
-//        }
 
         close(connfd);
     }
