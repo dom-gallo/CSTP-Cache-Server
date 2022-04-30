@@ -55,23 +55,23 @@ build CMakeFiles/cstp_server.dir/main.cpp.o: CXX_COMPILER__cstp_server_Debug /Us
   OBJECT_DIR = CMakeFiles/cstp_server.dir
   OBJECT_FILE_DIR = CMakeFiles/cstp_server.dir
 
-build CMakeFiles/cstp_server.dir/Message.cpp.o: CXX_COMPILER__cstp_server_Debug /Users/dgallo/cstp_server/Message.cpp || cmake_object_order_depends_target_cstp_server
-  DEP_FILE = CMakeFiles/cstp_server.dir/Message.cpp.o.d
+build CMakeFiles/cstp_server.dir/lib/Message.cpp.o: CXX_COMPILER__cstp_server_Debug /Users/dgallo/cstp_server/lib/Message.cpp || cmake_object_order_depends_target_cstp_server
+  DEP_FILE = CMakeFiles/cstp_server.dir/lib/Message.cpp.o.d
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.1 -std=gnu++2a
   OBJECT_DIR = CMakeFiles/cstp_server.dir
-  OBJECT_FILE_DIR = CMakeFiles/cstp_server.dir
+  OBJECT_FILE_DIR = CMakeFiles/cstp_server.dir/lib
 
-build CMakeFiles/cstp_server.dir/RequestHandler.cpp.o: CXX_COMPILER__cstp_server_Debug /Users/dgallo/cstp_server/RequestHandler.cpp || cmake_object_order_depends_target_cstp_server
-  DEP_FILE = CMakeFiles/cstp_server.dir/RequestHandler.cpp.o.d
+build CMakeFiles/cstp_server.dir/lib/RequestHandler.cpp.o: CXX_COMPILER__cstp_server_Debug /Users/dgallo/cstp_server/lib/RequestHandler.cpp || cmake_object_order_depends_target_cstp_server
+  DEP_FILE = CMakeFiles/cstp_server.dir/lib/RequestHandler.cpp.o.d
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.1 -std=gnu++2a
   OBJECT_DIR = CMakeFiles/cstp_server.dir
-  OBJECT_FILE_DIR = CMakeFiles/cstp_server.dir
+  OBJECT_FILE_DIR = CMakeFiles/cstp_server.dir/lib
 
-build CMakeFiles/cstp_server.dir/OpCodes.cpp.o: CXX_COMPILER__cstp_server_Debug /Users/dgallo/cstp_server/OpCodes.cpp || cmake_object_order_depends_target_cstp_server
-  DEP_FILE = CMakeFiles/cstp_server.dir/OpCodes.cpp.o.d
+build CMakeFiles/cstp_server.dir/lib/OpCodes.cpp.o: CXX_COMPILER__cstp_server_Debug /Users/dgallo/cstp_server/lib/OpCodes.cpp || cmake_object_order_depends_target_cstp_server
+  DEP_FILE = CMakeFiles/cstp_server.dir/lib/OpCodes.cpp.o.d
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.1 -std=gnu++2a
   OBJECT_DIR = CMakeFiles/cstp_server.dir
-  OBJECT_FILE_DIR = CMakeFiles/cstp_server.dir
+  OBJECT_FILE_DIR = CMakeFiles/cstp_server.dir/lib
 
 
 # =============================================================================
@@ -81,7 +81,7 @@ build CMakeFiles/cstp_server.dir/OpCodes.cpp.o: CXX_COMPILER__cstp_server_Debug 
 #############################################
 # Link the executable cstp_server
 
-build cstp_server: CXX_EXECUTABLE_LINKER__cstp_server_Debug CMakeFiles/cstp_server.dir/main.cpp.o CMakeFiles/cstp_server.dir/Message.cpp.o CMakeFiles/cstp_server.dir/RequestHandler.cpp.o CMakeFiles/cstp_server.dir/OpCodes.cpp.o
+build cstp_server: CXX_EXECUTABLE_LINKER__cstp_server_Debug CMakeFiles/cstp_server.dir/main.cpp.o CMakeFiles/cstp_server.dir/lib/Message.cpp.o CMakeFiles/cstp_server.dir/lib/RequestHandler.cpp.o CMakeFiles/cstp_server.dir/lib/OpCodes.cpp.o
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.1
   OBJECT_DIR = CMakeFiles/cstp_server.dir
   POST_BUILD = :

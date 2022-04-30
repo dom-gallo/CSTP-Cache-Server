@@ -16,7 +16,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <iostream>
-#include "RequestHandler.cpp"
+#include "lib/RequestHandler.cpp"
 #define BUFSIZE 1024
 
 #if 0
