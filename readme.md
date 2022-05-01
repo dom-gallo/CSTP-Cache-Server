@@ -27,3 +27,5 @@ A simple (mostly) binary transmission protocol over sockets, to retrieve cached 
  | !       | DELETE      | op code, 4 empty bytes, 64 bit key hash                                         |
 | %       | UPDATE      | op code, 4 empty bytes, 64 bit key hash, binary data                            |
 
+# Client Library
+Working on a java client library located at: https://github.com/dom-gallo/CSTP-Java-Client-Library
