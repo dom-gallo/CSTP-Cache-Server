@@ -44,8 +44,15 @@ public:
     void addToSize(int x){
         size += x;
     }
+    void setKey(char *keyIn){
+        key = keyIn;
+    }
+    char* getKey(){
+        return key;
+    }
 private:
     OpCodes opcode;
+    char *key;
     int size = 0;
     int capacity = 0;
     char *buffer;
