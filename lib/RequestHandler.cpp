@@ -72,15 +72,15 @@ public:
             if(n < 0) {
                 std::cout << "Error reading data in message buffer " << std::endl;
             }
+            std::cout << "Data = ";
             for(unsigned int i = 0; i < messageCapacity; ++i)
             {
                 printf("%02x ", buffer[i]);
             }
             std::cout<< std::endl;
 
-            std::cout << "Server received " << messageCapacity << " bytes: " << buffer << std::endl;
+//            std::cout << "Server received " << messageCapacity << " bytes: " << buffer << std::endl;
         }
-        std::cout << "Finished loading data in messageBuffer" << std::endl;
     }
 private:
     int connFileDescriptor;

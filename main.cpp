@@ -135,13 +135,18 @@ int main(int argc, char **argv) {
          * Switch based on Operation Code
          * */
 
-        std::cout << "message opcode: " <<  std::hex << (OpCodes) message->getOpCode() << std::endl;
+//        std::cout << "message opcode: " <<  std::hex << (OpCodes) message->getOpCode() << std::endl;
         std::cout << "incoming payload size: " << std::hex << dataSize << std::endl;
-
+        int keySize = 8;
         switch (message->getOpCode()) {
             // GET
             case '@':
-
+                std::cout << "GET REQUEST: For data with key = ";
+                for(int i = 0; i < keySize; i++){
+                    std::cout << (int) message->getKey()[i] << " ";
+                    // hello world
+                }
+                std::cout << "\n" << std::flush;
                 break;
             // Insert
             case 'I':
@@ -157,12 +162,13 @@ int main(int argc, char **argv) {
                 break;
         }
         
-        std::cout << "Response to client is " << message->getCapacity() << " bytes" << std::endl;
+        std::cout << "Response to client is " << message->getCapacity() << " bytes =";
 
         for(int i = 0; i < message->getCapacity(); i++)
         {
             std::cout << " " << std::hex << (int) buf[i] << std::flush;
         }
+        std::cout << std::endl;
         n = write(connfd, buf, message->getCapacity());
 
         if (n < 0)
