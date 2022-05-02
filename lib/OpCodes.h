@@ -7,10 +7,10 @@
 
 
 enum OpCodes{
-    OP_GET = '@',
-    OP_INSERT,
-    OP_DELETE,
-    OP_UPDATE,
+    OP_GET    = '@',
+    OP_INSERT = 'I',
+    OP_DELETE = '!',
+    OP_UPDATE = '%',
 };
 
 

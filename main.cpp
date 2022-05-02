@@ -85,27 +85,30 @@ int main(int argc, char **argv) {
        then close connection. */
     clientlen = sizeof(clientaddr);
 
-    while (1) {
-
+    while (1)
+    {
         /* accept: wait for a connection request */
         connfd = accept(listenfd, (struct sockaddr *) &clientaddr, reinterpret_cast<socklen_t *>(&clientlen));
         if (connfd < 0)
             error("ERROR on accept");
-
         /* gethostbyaddr: determine who sent the message */
         hostp = gethostbyaddr((const char *)&clientaddr.sin_addr.s_addr,
                               sizeof(clientaddr.sin_addr.s_addr), AF_INET);
-        if (hostp == NULL){
+        if (hostp == NULL)
+        {
             error("ERROR on gethostbyaddr");
         }
-
         hostaddrp = inet_ntoa(clientaddr.sin_addr);
-
         if (hostaddrp == NULL)
+        {
             error("ERROR on inet_ntoa\n");
-        printf("server established connection with %s (%s)\n",
+        }
+        printf("\nserver established connection with %s (%s)\n",
                hostp->h_name, hostaddrp);
 
+        /* TODO:
+         * PKI Certificate handshake process
+         **/
         /* read: read input string from the client */
         bzero(buf, BUFSIZE);
         RequestHandler *requestHandler = new RequestHandler(connfd, buf);
@@ -113,20 +116,59 @@ int main(int argc, char **argv) {
 
         int opCode = requestHandler->getOpCodeFromSteam();
         message->setOpcode(opCode);
-        std::cout << "message opcode: " <<  std::hex<< (OpCodes) message->getOpCode() << std::endl;
+
 
         int dataSize = requestHandler->getPayLoadSize();
-        std::cout << "incoming payload size: " << std::hex << dataSize << std::endl;
+
 
         message->setCapacity(dataSize);
         message->setBuffer(buf);
+        char* key = requestHandler->getKey();
+        message->setKey(key);
+        std::cout << "Key = ";
+        for(int i = 0; i < 8; i++){
+            std::cout << " " << std::hex << (int) key[i];
+        }
+        std::cout << " End of key" << std::endl;
         requestHandler->loadDataIntoMessage(message);
+        /*
+         * Switch based on Operation Code
+         * */
 
-        n = write(connfd, buf, strlen(buf));
-        if (n < 0){
+        std::cout << "message opcode: " <<  std::hex << (OpCodes) message->getOpCode() << std::endl;
+        std::cout << "incoming payload size: " << std::hex << dataSize << std::endl;
+
+        switch (message->getOpCode()) {
+            // GET
+            case '@':
+
+                break;
+            // Insert
+            case 'I':
+
+                break;
+            // Update
+            case '!':
+
+                break;
+            // Delete
+            case '%':
+
+                break;
+        }
+        
+        std::cout << "Response to client is " << message->getCapacity() << " bytes" << std::endl;
+
+        for(int i = 0; i < message->getCapacity(); i++)
+        {
+            std::cout << " " << std::hex << (int) buf[i] << std::flush;
+        }
+        n = write(connfd, buf, message->getCapacity());
+
+        if (n < 0)
+        {
             printf("ERROR writing to socket\n");
         }
-
         close(connfd);
     }
 }

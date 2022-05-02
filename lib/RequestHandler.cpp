@@ -47,6 +47,18 @@ public:
         setPayLoadSize(dataSize);
         return dataSize;
     }
+    char* getKey(){
+        char* key = new char[8];
+        int n = read(connFileDescriptor, buffer, 8);
+        if(n<8)
+        {
+            std::cout << "Could not read key bytes" << std::endl;
+        }
+        for(int i = 0; i < 8; i++){
+            key[i] = buffer[i];
+        }
+        return key;
+    }
     void loadDataIntoMessage(Message *message){
         int messageCapacity = message->getCapacity();
         if(messageCapacity > 1024) {
@@ -56,7 +68,7 @@ public:
         // Loop for loading in chunks of data.
         char *messageBuffer = message->getBuffer();
 
-        while(n = read(connFileDescriptor, messageBuffer, messageCapacity) > 0){
+        while( (n = read(connFileDescriptor, messageBuffer, messageCapacity)) > 0){
             if(n < 0) {
                 std::cout << "Error reading data in message buffer " << std::endl;
             }
@@ -68,7 +80,7 @@ public:
 
             std::cout << "Server received " << messageCapacity << " bytes: " << buffer << std::endl;
         }
-
+        std::cout << "Finished loading data in messageBuffer" << std::endl;
     }
 private:
     int connFileDescriptor;
