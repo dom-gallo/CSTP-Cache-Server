@@ -141,24 +141,23 @@ int main(int argc, char **argv) {
         switch (message->getOpCode()) {
             // GET
             case '@':
-                std::cout << "GET REQUEST: For data with key = ";
-                for(int i = 0; i < keySize; i++){
-                    std::cout << (int) message->getKey()[i] << " ";
-                    // hello world
-                }
-                std::cout << "\n" << std::flush;
+                std::cout << "GET REQUEST: For data with ";
+                message->printKey();
                 break;
             // Insert
             case 'I':
-
+                std::cout << "INSERT REQUEST: For data with ";
+                message->printKey();
                 break;
             // Update
             case '!':
-
+                std::cout << "UPDATE REQUEST: For data with ";
+                message->printKey();
                 break;
             // Delete
             case '%':
-
+                std::cout << "DELETE REQUEST: For data with ";
+                message->printKey();
                 break;
         }
         

@@ -50,6 +50,20 @@ public:
     char* getKey(){
         return key;
     }
+    void printKey(){
+        if(key ==  nullptr)
+        {
+            std::cout << "No Key" << std::endl;
+        } else
+        {
+            std::cout << "key =";
+            for (int i = 0; i < 8; i++)
+            {
+                std::cout << " " << (int) key[i];
+            }
+            std::cout << std::endl << std::flush;
+        }
+    }
 private:
     OpCodes opcode;
     char *key;
