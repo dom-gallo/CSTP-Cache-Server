@@ -4,7 +4,8 @@
  * usage:  <port>
  *
  * echoserver.c - A simple connection-based echo server
- *
+ * Credit for boiler-plate C server is here: http://www.cs.cmu.edu/afs/cs/academic/class/15213-f00/www/class24code/echoserver.c
+ * The
  */
 
 #include <stdio.h>
