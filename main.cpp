@@ -18,6 +18,7 @@
 #include <arpa/inet.h>
 #include <iostream>
 #include "lib/RequestHandler.cpp"
+#include "lib/Server_State.h"
 #define BUFSIZE 1024
 
 #if 0
@@ -90,97 +91,136 @@ int main(int argc, char **argv) {
     /* main loop: wait for a connection request, echo input line,
        then close connection. */
     clientlen = sizeof(clientaddr);
-
+    Server_State serverState = SS_AWAITING_CONNECTION;
+    Server_State &serverStateRef = serverState;
     while (1)
     {
-        /* accept: wait for a connection request */
-        connfd = accept(listenfd, (struct sockaddr *) &clientaddr, reinterpret_cast<socklen_t *>(&clientlen));
-        if (connfd < 0)
-            error("ERROR on accept");
-        /* gethostbyaddr: determine who sent the message */
-        hostp = gethostbyaddr((const char *)&clientaddr.sin_addr.s_addr,
-                              sizeof(clientaddr.sin_addr.s_addr), AF_INET);
-        if (hostp == NULL)
-        {
-            error("ERROR on gethostbyaddr");
-        }
-        hostaddrp = inet_ntoa(clientaddr.sin_addr);
-        if (hostaddrp == NULL)
-        {
-            error("ERROR on inet_ntoa\n");
-        }
-        printf("\nserver established connection with %s (%s)\n",
-               hostp->h_name, hostaddrp);
-
-        /* TODO:
-         * PKI Certificate handshake process
-         **/
-        /* read: read input string from the client */
-        bzero(buf, BUFSIZE);
-        RequestHandler *requestHandler = new RequestHandler(connfd, buf);
-        Message *message = requestHandler->getMessage();
-
-        int opCode = requestHandler->getOpCodeFromSteam();
-        message->setOpcode(opCode);
-
-
-        int dataSize = requestHandler->getPayLoadSize();
-
-
-        message->setCapacity(dataSize);
-        message->setBuffer(buf);
-        char* key = requestHandler->getKey();
-        message->setKey(key);
-        std::cout << "Key = ";
-        for(int i = 0; i < 8; i++){
-            std::cout << " " << std::hex << (int) key[i];
-        }
-        std::cout << " End of key" << std::endl;
-        requestHandler->loadDataIntoMessage(message);
-        /*
-         * Switch based on Operation Code
-         * */
-
-//        std::cout << "message opcode: " <<  std::hex << (OpCodes) message->getOpCode() << std::endl;
-        std::cout << "incoming payload size: " << std::hex << dataSize << std::endl;
+        // declarations and initializations
+        RequestHandler *requestHandler = nullptr;
+        Message *message = nullptr;
         int keySize = 8;
-        switch (message->getOpCode()) {
-            // GET
-            case '@':
-                std::cout << "GET REQUEST: For data with ";
-                message->printKey();
-                break;
-            // Insert
-            case 'I':
-                std::cout << "INSERT REQUEST: For data with ";
-                message->printKey();
-                break;
-            // Update
-            case '!':
-                std::cout << "UPDATE REQUEST: For data with ";
-                message->printKey();
-                break;
-            // Delete
-            case '%':
-                std::cout << "DELETE REQUEST: For data with ";
-                message->printKey();
-                break;
-        }
-        
-        std::cout << "Response to client is " << message->getCapacity() << " bytes =";
 
-        for(int i = 0; i < message->getCapacity(); i++)
-        {
-            std::cout << " " << std::hex << (int) buf[i] << std::flush;
-        }
-        std::cout << std::endl;
-        n = write(connfd, buf, message->getCapacity());
+        switch(serverStateRef){
 
-        if (n < 0)
-        {
-            printf("ERROR writing to socket\n");
+            case SS_AWAITING_CONNECTION:
+                /* accept: wait for a connection request */
+                connfd = accept(listenfd, (struct sockaddr *) &clientaddr, reinterpret_cast<socklen_t *>(&clientlen));
+                if (connfd < 0)
+                    error("ERROR on accept");
+                serverStateRef = SS_PARSING_CLIENT;
+                break;
+            case SS_PARSING_CLIENT:
+
+                /* gethostbyaddr: determine who sent the message */
+                hostp = gethostbyaddr((const char *)&clientaddr.sin_addr.s_addr,
+                                      sizeof(clientaddr.sin_addr.s_addr), AF_INET);
+                if (hostp == NULL)
+                {
+                    error("ERROR on gethostbyaddr");
+                }
+                hostaddrp = inet_ntoa(clientaddr.sin_addr);
+                if (hostaddrp == NULL)
+                {
+                    error("ERROR on inet_ntoa\n");
+                }
+                printf("\nserver established connection with %s (%s)\n",
+                       hostp->h_name, hostaddrp);
+                serverStateRef = SS_SERIALIZING_REQUEST;
+                break;
+
+            case SS_SERIALIZING_REQUEST:
+
+                /* TODO:
+                 * PKI Certificate handshake process
+                 **/
+
+
+                /* read: read input string from the client */
+                bzero(buf, BUFSIZE);
+                requestHandler = new RequestHandler(connfd, buf);
+                message = requestHandler->getMessage();
+                int opCode;
+                int dataSize;
+                char *key;
+                {
+                    opCode = requestHandler->getOpCodeFromSteam();
+                    dataSize = requestHandler->getOpCodeFromSteam();
+                    key = requestHandler->getKey();
+                }
+//                int opCode = requestHandler->getOpCodeFromSteam();
+                message->setOpcode(opCode);
+//                int dataSize = requestHandler->getPayLoadSize();
+                message->setCapacity(dataSize);
+                message->setBuffer(buf);
+                message->setKey(key);
+                std::cout << "Key = ";
+                for(int i = 0; i < 8; i++){
+                    std::cout << " " << std::hex << (int) key[i];
+                }
+                std::cout << " End of key" << std::endl;
+                requestHandler->loadDataIntoMessage(message);
+
+                std::cout << "incoming payload size: " << std::hex << dataSize << std::endl;
+                serverStateRef = SS_ROUTING_REQUEST;
+                break;
+            case SS_ROUTING_REQUEST:
+//                int keySize = 8;
+                switch (message->getOpCode()) {
+                    // GET
+                    case '@':
+                        std::cout << "GET REQUEST: For data with ";
+                        message->printKey();
+                        serverStateRef = SS_BUILDING_RESPONSE;
+                        break;
+                        // Insert
+                    case 'I':
+                        std::cout << "INSERT REQUEST: For data with ";
+                        message->printKey();
+                        serverStateRef = SS_BUILDING_RESPONSE;
+                        break;
+                        // Update
+                    case '!':
+                        std::cout << "UPDATE REQUEST: For data with ";
+                        message->printKey();
+                        serverStateRef = SS_BUILDING_RESPONSE;
+                        break;
+                        // Delete
+                    case '%':
+                        std::cout << "DELETE REQUEST: For data with ";
+                        message->printKey();
+                        serverStateRef = SS_BUILDING_RESPONSE;
+                        break;
+                }
+                break;
+
+            case SS_BUILDING_RESPONSE:
+
+                std::cout << "Response to client is " << message->getCapacity() << " bytes =";
+
+                for(int i = 0; i < message->getCapacity(); i++)
+                {
+                    std::cout << " " << std::hex << (int) buf[i] << std::flush;
+                }
+                std::cout << std::endl;
+                serverStateRef = SS_WRITING_RESPONSE;
+                break;
+
+            case SS_WRITING_RESPONSE:
+
+                n = write(connfd, buf, message->getCapacity());
+
+                if (n < 0)
+                {
+                    printf("ERROR writing to socket\n");
+                }
+                close(connfd);
+                serverStateRef = SS_AWAITING_CONNECTION;
+                break;
+
+            case SS_EXIT:
+                exit(0);
+                break;
         }
-        close(connfd);
     }
 }
 
