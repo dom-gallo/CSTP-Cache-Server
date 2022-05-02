@@ -33,7 +33,13 @@ void error(char *msg) {
     perror(msg);
     exit(1);
 }
-
+/*
+ *TODO:
+ * 1. Add state enum
+ * 2. implement state for main while loop.
+ * 3. get better at programming.
+ *
+ * */
 int main(int argc, char **argv) {
     int listenfd; /* listening socket */
     int connfd; /* connection socket */
