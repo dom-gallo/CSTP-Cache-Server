@@ -136,6 +136,7 @@ int main(int argc, char **argv) {
 
 
                 /* read: read input string from the client */
+                // This buffer size needs to be updated.
                 bzero(buf, BUFSIZE);
                 requestHandler = new RequestHandler(connfd, buf);
                 message = requestHandler->getMessage();
