@@ -21,7 +21,7 @@ public:
     Message* getMessage(){
         return &message;
     }
-    int getOpCodeFromSteam(){
+    int getOpCodeFromStream(){
         int n = read(connFileDescriptor, buffer, 1);
         if(n < 1){
             std::cout << "Could not read 1 byte from the stream to get the op code" << std::endl;

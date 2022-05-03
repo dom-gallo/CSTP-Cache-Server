@@ -90,16 +90,17 @@ int main(int argc, char **argv) {
 
     /* main loop: wait for a connection request, echo input line,
        then close connection. */
+
+
+    // declarations and initializations
     clientlen = sizeof(clientaddr);
     Server_State serverState = SS_AWAITING_CONNECTION;
     Server_State &serverStateRef = serverState;
+    RequestHandler *requestHandler = nullptr;
+    Message *message = nullptr;
+    int keySize = 8;
     while (1)
     {
-        // declarations and initializations
-        RequestHandler *requestHandler = nullptr;
-        Message *message = nullptr;
-        int keySize = 8;
-
         switch(serverStateRef){
 
             case SS_AWAITING_CONNECTION:
@@ -144,11 +145,11 @@ int main(int argc, char **argv) {
                 int dataSize;
                 char *key;
                 {
-                    opCode = requestHandler->getOpCodeFromSteam();
-                    dataSize = requestHandler->getOpCodeFromSteam();
+                    opCode = requestHandler->getOpCodeFromStream();
+                    dataSize = requestHandler->getPayLoadSize();
                     key = requestHandler->getKey();
                 }
-//                int opCode = requestHandler->getOpCodeFromSteam();
+//                int opCode = requestHandler->getOpCodeFromStream();
                 message->setOpcode(opCode);
 //                int dataSize = requestHandler->getPayLoadSize();
                 message->setCapacity(dataSize);
